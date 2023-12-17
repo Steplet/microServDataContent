@@ -39,8 +39,8 @@ class GateWayController(val repo:ModelRepo,
     }
 
     @PostMapping("getStock")
-    fun getApiStock(symbol:String){
-        val data: JSONObject = servicesFin.getApiStock(symbol)
+    fun getApiStock(symbol:String, number:Int){
+        val data: JSONObject = servicesFin.getApiStock(symbol, number)
         data.put("Command", "gotStock")
         producer.publish(topicGate, data.toString())
     }

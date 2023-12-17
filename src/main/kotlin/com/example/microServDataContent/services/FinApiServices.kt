@@ -13,7 +13,7 @@ class FinApiServices {
 //    val urlStock = "https://api.iex.cloud/v1/data/core/quote/msft?token=$apiKey"
     val urlGetStock = "https://api.iex.cloud/v1/data/core/quote/"
 
-    fun getApiStock(symbol:String): JSONObject {
+    fun getApiStock(symbol:String, number:Int): JSONObject {
 
         var response =
             URL(urlGetStock.plus(symbol).plus("?token=").plus(apiKey))
@@ -22,9 +22,16 @@ class FinApiServices {
                 .use { it.readText() }
 
         response = response.replace(Regex("\\[|\\]"), "")
+
         val json = JSONObject(response)
-//        println(json)
-        return json
+        val jsonOut = JSONObject()
+        jsonOut.put("companyName", json.getString("companyName"))
+        jsonOut.put("latestPrice", json.getInt("latestPrice"))
+        jsonOut.put("totalValue", number * json.getInt("latestPrice"))
+
+        println(jsonOut)
+
+        return jsonOut
 
     }
 

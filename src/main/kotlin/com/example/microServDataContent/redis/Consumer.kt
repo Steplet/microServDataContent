@@ -23,7 +23,8 @@ class Consumer(@Lazy val gate:GateWayController):MessageListener {
             "Hello" -> gate.getDataFromDatabase()
             "getStock" ->{
                 val symbol:String = json.getString("symbol")
-                gate.getApiStock(symbol)
+                val number:Int = json.getInt("Number")
+                gate.getApiStock(symbol, number)
             }
             else ->{
                 println("Wrong: bad mes!")
