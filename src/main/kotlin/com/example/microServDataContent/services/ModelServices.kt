@@ -20,10 +20,10 @@ class ModelServices(val repo:ModelRepo,
         repo.save(Model(dataPrice = data))
     }
 
-    fun showAllData(): JSONObject {
-        val data = repo.findAll()
-
-        return serJson.createJsonFromList(data)
-    }
+//    fun showAllData(): JSONObject {
+//        val data = repo.findAll()
+//
+//        return serJson.createJsonFromList(data)
+//    }
 
 }

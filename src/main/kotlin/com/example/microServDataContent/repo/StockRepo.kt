@@ -1,7 +1,7 @@
 package com.example.microServDataContent.repo
 
 import com.example.microServDataContent.Model.Stock
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.ListCrudRepository
 
-interface StockRepo:CrudRepository<Stock, Long> {
+interface StockRepo: ListCrudRepository<Stock, Long> {
 }

@@ -5,9 +5,14 @@ import com.example.microServDataContent.repo.StockRepo
 import org.json.JSONObject
 import org.springframework.stereotype.Service
 
+/**
+ * Useful Services for manipulations with stock model
+ */
 @Service
-class StockServ(val repoStock: StockRepo,) {
+class StockServ(val repoStock: StockRepo,
+    val jsonServ:JsonServices) {
 
+    //convert to stock model
     fun fromJsonToStock(json:JSONObject): Stock {
         var stock : Stock = Stock(
             companyName = json.getString("companyName"),
@@ -18,5 +23,14 @@ class StockServ(val repoStock: StockRepo,) {
     }
     fun addTpRepo(stock:Stock){
         repoStock.save(stock)
+    }
+
+    fun delFromRepById(id:Int){
+        repoStock.deleteById(id.toLong())
+    }
+
+    fun getAllStocks(): JSONObject {
+
+        return jsonServ.createJsonFromList(repoStock.findAll())
     }
 }

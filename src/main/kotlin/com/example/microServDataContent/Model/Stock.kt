@@ -2,6 +2,9 @@ package com.example.microServDataContent.Model
 
 import jakarta.persistence.*
 
+/**
+ * DTO Model
+ */
 @Entity
 @Table(name = "StockTable")
 data class Stock(

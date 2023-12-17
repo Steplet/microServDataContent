@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Api for manage this server
+ */
 @RestController
 @RequestMapping("/api/v1")
-class GateWayController(val repo:ModelRepo,
-                        val stockServ:StockServ,
-                        val serviceModel: ModelServices,
+class GateWayController(val stockServ:StockServ,
                         val servicesFin:FinApiServices,
                         val producer:Producer,)
 {
@@ -26,27 +27,31 @@ class GateWayController(val repo:ModelRepo,
     val topicGate:String = "Gate"
 
 
-    @PostMapping("/save/{data}")
-    fun saveWithSomeData(@PathVariable data:Double){
-        serviceModel.saveData(data)
 
+    @PostMapping("delStock/{id}")
+    fun delStockById(@PathVariable id:Int){
+        stockServ.delFromRepById(id)
 
     }
-
-    @GetMapping("getData")
-    fun getDataFromDatabase() {
-        val data = serviceModel.showAllData()
-        data.put("Command", "test")
-        println(data)
-        producer.publish(topicGate, data.toString())
+    @PostMapping("getAllStocks")
+    fun getAllStocks(){
+        val stocks = stockServ.getAllStocks()
+        stocks.put("Command", "gotAllStocks")
+        producer.publish(topicGate, stocks.toString())
     }
-
-    @PostMapping("getStock")
-    fun getApiStock(symbol:String, number:Int){
+    @PostMapping("addStock")
+    fun addApiStock(symbol:String, number:Int){
         val data: JSONObject = servicesFin.getApiStock(symbol, number)
         val stock = stockServ.fromJsonToStock(data)
         stockServ.addTpRepo(stock)
         data.put("Command", "gotStock")
+        producer.publish(topicGate, data.toString())
+    }
+
+    @PostMapping("showPriceStock")
+    fun showPriceStock(symbol: String){
+        val data = servicesFin.showPrice(symbol)
+        data.put("Command", "gotPriceStock")
         producer.publish(topicGate, data.toString())
     }
 }
