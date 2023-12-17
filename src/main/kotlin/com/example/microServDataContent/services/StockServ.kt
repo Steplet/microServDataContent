@@ -15,6 +15,7 @@ class StockServ(val repoStock: StockRepo,
     //convert to stock model
     fun fromJsonToStock(json:JSONObject): Stock {
         var stock : Stock = Stock(
+            userId = json.getInt("userId"),
             companyName = json.getString("companyName"),
             latestPrice = json.getInt("latestPrice"),
             totalValue = json.getInt("totalValue"))
@@ -25,12 +26,13 @@ class StockServ(val repoStock: StockRepo,
         repoStock.save(stock)
     }
 
-    fun delFromRepById(id:Int){
+    fun delFromRepById(id:Int, userId:Int){
+//        repoStock.deleteByIdAndUserId(id, userId)
         repoStock.deleteById(id.toLong())
     }
 
-    fun getAllStocks(): JSONObject {
+    fun getAllStocks(userId: Int): JSONObject {
 
-        return jsonServ.createJsonFromList(repoStock.findAll())
+        return jsonServ.createJsonFromList(repoStock.findAllByUserId(userId))
     }
 }

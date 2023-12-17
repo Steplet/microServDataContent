@@ -16,7 +16,13 @@ class JsonServices {
         var counter = 0
         for(i in list){
             counter += 1
-            json.put(counter.toString(), i)
+            var tmp = JSONObject()
+            tmp.put("id", i.id)
+            tmp.put("companyName", i.companyName)
+            tmp.put("totalValue", i.totalValue)
+            tmp.put("latestPrice", i.latestPrice)
+            tmp.put("userId", i.userId)
+            json.put(counter.toString(), tmp)
         }
 
         return json

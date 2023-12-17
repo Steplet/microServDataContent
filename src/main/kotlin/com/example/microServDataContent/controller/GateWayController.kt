@@ -24,19 +24,20 @@ class GateWayController(val stockServ:StockServ,
 
 
     @PostMapping("delStock/{id}")
-    fun delStockById(@PathVariable id:Int){
-        stockServ.delFromRepById(id)
+    fun delStockById(@PathVariable id:Int, userId: Int){
+        stockServ.delFromRepById(id, userId)
+        println("del")
 
     }
     @PostMapping("getAllStocks")
-    fun getAllStocks(){
-        val stocks = stockServ.getAllStocks()
+    fun getAllStocks(userId: Int){
+        val stocks = stockServ.getAllStocks(userId)
         stocks.put("Command", "gotAllStocks")
         producer.publish(topicGate, stocks.toString())
     }
     @PostMapping("addStock")
-    fun addApiStock(symbol:String, number:Int){
-        val data: JSONObject = servicesFin.getApiStock(symbol, number)
+    fun addApiStock(symbol:String,userId:Int ,number:Int){
+        val data: JSONObject = servicesFin.getApiStock(symbol, userId ,number)
         val stock = stockServ.fromJsonToStock(data)
         stockServ.addTpRepo(stock)
         data.put("Command", "gotStock")

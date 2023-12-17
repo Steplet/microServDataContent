@@ -25,6 +25,7 @@ class Consumer(@Lazy val gate:GateWayController):MessageListener {
         val json = JSONObject(mes)
 
         val cmd = json.get("Command")
+        println(mes.toString())
 
         //switch case for action
 
@@ -32,23 +33,26 @@ class Consumer(@Lazy val gate:GateWayController):MessageListener {
 
             //add Stock to rep and send
             "addStock" ->{
+                val userId:Int = json.getInt("userId")
                 val symbol:String = json.getString("symbol")
                 val number:Int = json.getInt("Number")
 
-                gate.addApiStock(symbol, number)
+                gate.addApiStock(symbol, userId, number)
             }
 
             //show all stocks from rep
 
             "getAllStocks" -> {
-                gate.getAllStocks()
+                val userId = json.getInt("userId")
+                gate.getAllStocks(userId)
             }
 
             //del stock from rep by id
             "delById" ->{
                 val id:Int = json.getInt("id")
+                val userId = json.getInt("userId")
 
-                gate.delStockById(id)
+                gate.delStockById(id, userId)
             }
 
             //show price of stock by symbol
