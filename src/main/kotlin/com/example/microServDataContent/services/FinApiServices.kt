@@ -1,6 +1,5 @@
 package com.example.microServDataContent.services
 
-import com.example.microServDataContent.Model.Model
 import org.json.JSONObject
 import org.springframework.stereotype.Service
 import java.net.URL

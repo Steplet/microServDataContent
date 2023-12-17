@@ -1,6 +1,5 @@
 package com.example.microServDataContent.services
 
-import com.example.microServDataContent.Model.Model
 import com.example.microServDataContent.Model.Stock
 import org.json.JSONObject
 import org.springframework.stereotype.Service

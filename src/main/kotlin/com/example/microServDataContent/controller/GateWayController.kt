@@ -1,14 +1,9 @@
 package com.example.microServDataContent.controller
 
-import com.example.microServDataContent.Model.Model
 import com.example.microServDataContent.redis.Producer
-import com.example.microServDataContent.repo.ModelRepo
-import com.example.microServDataContent.repo.StockRepo
 import com.example.microServDataContent.services.FinApiServices
-import com.example.microServDataContent.services.ModelServices
 import com.example.microServDataContent.services.StockServ
 import org.json.JSONObject
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
